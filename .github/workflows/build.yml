@@ -24,7 +24,7 @@ jobs:
         run: npm ci
 
       - name: Download assets
-        run: npm run download-assets
+        run: pwsh -ExecutionPolicy Bypass -File download_assets.ps1
 
       - name: Build project
         run: npm run build
