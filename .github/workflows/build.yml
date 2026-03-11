@@ -1,9 +1,8 @@
 name: Build and Deploy
 
 permissions:
-  contents: write  # allow gh-pages action to push
+  contents: write # allow gh-pages action to push
   pages: write
-
 
 on:
   push:
