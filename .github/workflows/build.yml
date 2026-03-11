@@ -1,5 +1,10 @@
 name: Build and Deploy
 
+permissions:
+  contents: write  # allow gh-pages action to push
+  pages: write
+
+
 on:
   push:
     branches: [main]
@@ -21,12 +26,15 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
+        working-directory: template-vite-main/template-vite-main
         run: npm ci
 
       - name: Download assets
+        working-directory: template-vite-main/template-vite-main
         run: pwsh -ExecutionPolicy Bypass -File download_assets.ps1
 
       - name: Build project
+        working-directory: template-vite-main/template-vite-main
         run: npm run build
 
       - name: Deploy to GitHub Pages
@@ -34,4 +42,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./template-vite-main/template-vite-main/dist
