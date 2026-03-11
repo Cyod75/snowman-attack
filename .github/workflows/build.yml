@@ -25,15 +25,12 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        working-directory: template-vite-main/template-vite-main
         run: npm ci
 
       - name: Download assets
-        working-directory: template-vite-main/template-vite-main
         run: pwsh -ExecutionPolicy Bypass -File download_assets.ps1
 
       - name: Build project
-        working-directory: template-vite-main/template-vite-main
         run: npm run build
 
       - name: Deploy to GitHub Pages
@@ -42,4 +39,4 @@ jobs:
         with:
           # use the built-in token; make sure repository settings allow write
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./template-vite-main/template-vite-main/dist
+          publish_dir: ./dist
