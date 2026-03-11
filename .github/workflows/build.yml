@@ -41,5 +41,6 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
+          # use the built-in token; make sure repository settings allow write
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./template-vite-main/template-vite-main/dist
