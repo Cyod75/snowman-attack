@@ -17,7 +17,7 @@ const phasermsg = () => {
 }   
 
 export default defineConfig({
-    base: './',
+    base: '/snowman-attack/',
     logLevel: 'warn',
     build: {
         rollupOptions: {
