@@ -26,6 +26,7 @@
     "vite": "^6.3.1"
   },
   "dependencies": {
+    "@bugfender/sdk": "^3.1.0",
     "phaser": "^3.90.0"
   }
 }

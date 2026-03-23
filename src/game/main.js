@@ -17,4 +17,6 @@ const config = {
   },
 };
 
-let game = new Phaser.Game(config);
+export default function StartGame(containerId) {
+  return new Phaser.Game({ ...config, parent: containerId });
+}

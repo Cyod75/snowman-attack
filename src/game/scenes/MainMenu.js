@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { logScenaCargada, logInteraccion } from "../../bugfender.js";
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
@@ -6,11 +7,12 @@ export default class MainMenu extends Phaser.Scene {
   }
 
   create() {
+    // LOG TIPO 1 — Menú principal cargado
+    logScenaCargada("MainMenu");
+
     this.sound.play("music", { loop: true, delay: 2 });
 
     this.add.shader("snow", 512, 384, 1024, 768);
-
-    //  Intro snowball fight
 
     let ball1 = this.add.image(-64, 300, "sprites", "snowball1");
     let ball2 = this.add.image(1088, 360, "sprites", "snowball1");
@@ -63,15 +65,19 @@ export default class MainMenu extends Phaser.Scene {
       },
     });
 
+    // LOG TIPO 2 — Usuario inicia partida con teclado
     this.input.keyboard.once(
       "keydown-SPACE",
       () => {
+        logInteraccion("Inicio de partida", "usuario presionó SPACE en el menú");
         this.scene.start("MainGame");
       },
       this,
     );
 
+    // LOG TIPO 2 — Usuario inicia partida con clic/toque
     this.input.once("pointerdown", () => {
+      logInteraccion("Inicio de partida", "usuario hizo clic/toque en el menú");
       this.scene.start("MainGame");
     });
   }

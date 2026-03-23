@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { logScenaCargada, logInteraccion } from "../../bugfender.js";
 
 export default class Preloader extends Phaser.Scene {
   constructor() {
@@ -8,6 +9,9 @@ export default class Preloader extends Phaser.Scene {
   }
 
   preload() {
+    // LOG TIPO 1 — Inicio de carga de assets
+    logScenaCargada("Preloader — cargando assets");
+
     this.load.setBaseURL("");
     this.loadText = this.add.text(512, 360, "Loading ...", {
       fontFamily: "Arial",
@@ -23,9 +27,7 @@ export default class Preloader extends Phaser.Scene {
     this.load.atlas("sprites", "sprites.png", "sprites.json");
     this.load.glsl("snow", "snow.glsl.js");
 
-    //  Audio ...
     this.load.setPath("assets/snowmen/");
-
     this.load.audio("music", ["music.ogg", "music.m4a", "music.mp3"]);
     this.load.audio("throw", ["throw.ogg", "throw.m4a", "throw.mp3"]);
     this.load.audio("move", ["move.ogg", "move.m4a", "move.mp3"]);
@@ -42,7 +44,8 @@ export default class Preloader extends Phaser.Scene {
   }
 
   create() {
-    //  Create our global animations
+    // LOG TIPO 1 — Assets cargados correctamente
+    logScenaCargada("Preloader — assets listos, creando animaciones");
 
     this.anims.create({
       key: "die",
@@ -198,7 +201,12 @@ export default class Preloader extends Phaser.Scene {
     if (this.sound.locked) {
       this.loadText.setText("Click to Start");
 
+      // LOG TIPO 2 — Usuario debe interactuar para desbloquear audio
+      logInteraccion("Audio bloqueado", "esperando clic del usuario para desbloquear");
+
       this.input.once("pointerdown", () => {
+        // LOG TIPO 2 — Usuario desbloqueó el audio
+        logInteraccion("Audio desbloqueado", "usuario hizo clic en pantalla de carga");
         this.scene.start("MainMenu");
       });
     } else {
