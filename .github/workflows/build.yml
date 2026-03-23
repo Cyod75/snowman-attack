@@ -1,42 +1,30 @@
-name: Build and Deploy
-
-permissions:
-  contents: write # allow gh-pages action to push
-  pages: write
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
-          cache: "npm"
+          node-version: 20
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Download assets
-        run: pwsh -ExecutionPolicy Bypass -File download_assets.ps1
-
-      - name: Build project
-        run: npm run build
+      - name: Build
+        run: npm run build-nolog
 
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
-          # use the built-in token; make sure repository settings allow write
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
